@@ -1,9 +1,10 @@
-CREATE MEMORY TABLE genres (
+
+CREATE TABLE genres (
     id int(5) IDENTITY NOT NULL primary key,
     name varchar(50) DEFAULT NULL
 );
 
-CREATE MEMORY TABLE authors (
+CREATE TABLE authors (
     id bigint(20) IDENTITY NOT NULL primary key,
     first_name varchar(255) DEFAULT NULL,
     last_name varchar(255) DEFAULT NULL,
@@ -11,7 +12,7 @@ CREATE MEMORY TABLE authors (
     year_of_death int(4) DEFAULT NULL
 );
 
-CREATE MEMORY TABLE book_descriptions (
+CREATE TABLE book_descriptions (
     id bigint(20) IDENTITY NOT NULL primary key,
     title varchar(255) DEFAULT NULL,
     isbn varchar(255) DEFAULT NULL,
@@ -19,12 +20,12 @@ CREATE MEMORY TABLE book_descriptions (
     number_of_pages int,
     author_id bigint(20) DEFAULT NULL,
     genre_id int(5) DEFAULT NULL,
-    image blob DEFAULT NULL,
+    image_url varchar(255) DEFAULT NULL,
     FOREIGN KEY(author_id) REFERENCES authors(id),
     FOREIGN KEY(genre_id) REFERENCES genres(id)
 );
 
-CREATE MEMORY TABLE books (
+CREATE TABLE books (
     id bigint(20) IDENTITY NOT NULL primary key,
     available_for_loan boolean DEFAULT NULL,
     shelf varchar(5) DEFAULT NULL,
@@ -32,7 +33,7 @@ CREATE MEMORY TABLE books (
     FOREIGN KEY(book_description_id) REFERENCES book_descriptions(id)
 );
 
-CREATE MEMORY TABLE users (
+CREATE TABLE users (
     id bigint(20) IDENTITY NOT NULL primary key,
     type varchar(10) DEFAULT NULL,
     password varchar(255) DEFAULT NULL,
@@ -46,14 +47,15 @@ CREATE MEMORY TABLE users (
     country varchar(255) DEFAULT NULL
 );
 
-CREATE MEMORY TABLE loans (
+CREATE TABLE loans (
     id bigint(20) IDENTITY NOT NULL primary key,
     active boolean DEFAULT NULL,
+    created_date date DEFAULT NULL,
     user_id bigint(20) DEFAULT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
-CREATE MEMORY TABLE loan_items (
+CREATE TABLE loan_items (
     id bigint(20) IDENTITY NOT NULL primary key,
     loan_date date DEFAULT NULL,
     due_date date DEFAULT NULL,
@@ -63,6 +65,7 @@ CREATE MEMORY TABLE loan_items (
     FOREIGN KEY(loan_id) REFERENCES loans(id),
     FOREIGN KEY(book_id) REFERENCES books(id)
 );
+
 
 
 

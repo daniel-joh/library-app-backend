@@ -28,8 +28,20 @@ public class BookDescription {
     @Column(name="number_of_pages")
     private int numberOfPages;
 
-    private byte[] image;
+    @Column(name="image_url")
+    private String imageUrl;
 
-    @OneToMany(mappedBy="bookDescription", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="bookDescription", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Book> books;
+
+    public void addBook(Book book) {
+        books.add(book);
+        book.setBookDescription(this);
+    }
+
+    public void removeBook(Book book) {
+        books.remove(book);
+        book.setBookDescription(null);
+    }
+
 }

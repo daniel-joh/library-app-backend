@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,17 +32,16 @@ public class User {
     @Embedded
     private Address address;
 
-    @JsonManagedReference
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
-    private List<Loan> loans;
+    private List<Loan> loans = new ArrayList<>();
 
     public void addLoan(Loan loan) {
-        this.loans.add(loan);
+        loans.add(loan);
         loan.setUser(this);
     }
 
     public void removeLoan(Loan loan) {
-        this.loans.remove(loan);
+        loans.remove(loan);
         loan.setUser(null);
     }
 
