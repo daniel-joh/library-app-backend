@@ -1,9 +1,11 @@
 package se.djoh.libraryappbackend.service.impl;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import se.djoh.libraryappbackend.domain.Book;
 import se.djoh.libraryappbackend.domain.Loan;
@@ -18,13 +20,13 @@ import se.djoh.libraryappbackend.service.UserService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class LoanServiceTest {
     @Mock
@@ -45,25 +47,21 @@ public class LoanServiceTest {
     @Test
     public void gettingLoanByIdSuccessfulTest() {
         Long loanId = 1L;
+        Long userId = 1L;
         Loan loan = new Loan();
         loan.setId(loanId);
 
-        when(loanRepository.findById(1L)).thenReturn(Optional.of(loan));
+        when(loanRepository.findLoanByUserIdAndId(userId, loanId)).thenReturn(loan);
 
-        Loan retLoan = loanService.getLoanById(loanId);
+        Loan retLoan = loanService.getLoanByUserIdAndLoanId(userId, loanId);
 
-        assertEquals(1L, retLoan.getId());
+        long id = retLoan.getId();
+        assertEquals(1, id);
     }
 
     @Test
     public void gettingLoanByNullIdShouldResultInNullTest() {
-        Long loanId = 1L;
-        Loan loan = new Loan();
-        loan.setId(loanId);
-
-        when(loanRepository.findById(1L)).thenReturn(Optional.of(loan));
-
-        Loan retLoan = loanService.getLoanById(null);
+        Loan retLoan = loanService.getLoanByUserIdAndLoanId(null, null);
 
         assertNull(retLoan);
     }
@@ -109,8 +107,10 @@ public class LoanServiceTest {
 
         Loan retLoan = loanService.createLoan(userId, bookIds);
 
-        assertEquals(1L, retLoan.getId());
-        assertEquals(1L, retLoan.getLoanItems().get(0).getBook().getId());
+        long loanId = retLoan.getId();
+        long bookId = retLoan.getLoanItems().get(0).getBook().getId();
+        assertEquals(1, loanId);
+        assertEquals(1, bookId);
     }
 
     @Test

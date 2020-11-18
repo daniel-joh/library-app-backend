@@ -1,20 +1,24 @@
 package se.djoh.libraryappbackend.service.impl;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import se.djoh.libraryappbackend.domain.BookDescription;
 import se.djoh.libraryappbackend.service.BookService;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 
 @SpringBootTest
 @Transactional
+@RunWith(SpringJUnit4ClassRunner.class)
 @Sql({"/testdata.sql"})
 public class BookServiceRealDbTest {
     @Autowired

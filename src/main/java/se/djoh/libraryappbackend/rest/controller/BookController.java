@@ -3,6 +3,7 @@ package se.djoh.libraryappbackend.rest.controller;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import se.djoh.libraryappbackend.domain.Book;
 import se.djoh.libraryappbackend.domain.BookDescription;
 import se.djoh.libraryappbackend.rest.dto.BookDto;
 import se.djoh.libraryappbackend.rest.exception.ResourceNotFoundException;
@@ -28,6 +29,18 @@ public class BookController {
             throw new ResourceNotFoundException("No books found!");
         }
         return createBookDtos(bookDescriptions);
+    }
+
+    @GetMapping(path = "/books/{id}")
+    public BookDto getBook(@PathVariable Long id) {
+        Book book = bookService.getBookById(id);
+
+        if (book == null) {
+            throw new ResourceNotFoundException("Book not found!");
+        }
+
+        BookDto dto = BookDto.createBookDto(book.getBookDescription());
+        return BookDto.addBookInformationToDto(dto, book);
     }
 
     private List<BookDto> createBookDtos(List<BookDescription> bookDescriptions) {

@@ -15,7 +15,6 @@ import se.djoh.libraryappbackend.service.UserService;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LoanServiceImpl implements LoanService {
@@ -67,9 +66,8 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public Loan getLoanById(Long loanId) {
-        Optional<Loan> loan = loanRepository.findById(loanId);
-        return loan.orElse(null);
+    public Loan getLoanByUserIdAndLoanId(Long userId, Long loanId) {
+        return loanRepository.findLoanByUserIdAndId(userId, loanId);
     }
 
     @Override

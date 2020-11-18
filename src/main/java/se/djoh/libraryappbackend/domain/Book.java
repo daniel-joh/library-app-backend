@@ -2,6 +2,8 @@ package se.djoh.libraryappbackend.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Entity
@@ -21,6 +23,7 @@ public class Book {
 
     private String shelf;
 
+    @ToString.Exclude
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="book_description_id")
     @JsonIgnore

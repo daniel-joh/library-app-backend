@@ -1,11 +1,9 @@
 delete from loan_items;
 delete from loans;
-delete from users;
 delete from books;
 delete from book_descriptions;
 delete from genres;
 delete from authors;
-
 
 insert into authors (id, first_name, last_name, year_of_birth, year_of_death) values
 (1, 'Stephen', 'King', 1950, NULL);
@@ -16,18 +14,18 @@ insert into genres (id, name) values (1, 'Thriller');
 insert into genres (id, name) values (2, 'Fantasy');
 insert into genres (id, name) values (3, 'Crime');
 
-insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url) values
-(1, 'Pestens tid', 123456, 'en sammanfattning', 900, 1, 1, 'url');
-insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url) values
-(2, 'Det', 123789, 'en sammanfattning', 1000, 1, 1, 'url');
-insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url) values
-(3, 'Christine', 156756, 'en sammanfattning', 800, 1, 1, 'url');
-insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url) values
-(4, 'Lida', 156756, 'en sammanfattning', 500, 1, 1, 'url');
-insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url) values
-(5, 'Varsel', 156757, 'en sammanfattning', 600, 1, 1, 'url');
-insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url) values
-(6, 'Jakten på röd oktober', 345456, 'en sammanfattning', 950, 2, 1, 'url');
+insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url, language, format, published_year, publisher_id) values
+(1, 'Pestens tid', 123456, 'en sammanfattning', 900, 1, 1, 'images/books/king.jpg', 'Swedish', 'PAPERBACK', 1980, 1);
+insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url, language, format, published_year, publisher_id) values
+(2, 'Det', 123789, 'en sammanfattning', 1000, 1, 1, 'images/books/king.jpg', 'Swedish','HARDCOVER', 1983, 1);
+insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url, language, format, published_year, publisher_id) values
+(3, 'Christine', 156756, 'en sammanfattning', 800, 1, 1, 'images/books/king.jpg', 'Swedish', 'HARDCOVER', 1985, 1);
+insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url, language, format, published_year, publisher_id) values
+(4, 'Lida', 156756, 'en sammanfattning', 500, 1, 1, 'images/books/king.jpg', 'Swedish','PAPERBACK', 1984, 1);
+insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url, language, format, published_year, publisher_id) values
+(5, 'Varsel', 156756, 'en sammanfattning', 600, 1, 1, 'images/books/king.jpg', 'Swedish','PAPERBACK', 1980, 1);
+insert into book_descriptions (id, title, isbn, summary, number_of_pages, author_id, genre_id, image_url, language, format, published_year, publisher_id) values
+(6, 'Jakten på röd oktober', 345456, 'en sammanfattning', 950, 2, 1, 'images/books/king.jpg', 'Swedish','HARDCOVER', 1990, 2);
 
 insert into books (id, available_for_loan, shelf, book_description_id) values (1, true, '1E', 1);
 insert into books (id, available_for_loan, shelf, book_description_id) values (2, true, '1E', 2);
@@ -37,13 +35,6 @@ insert into books (id, available_for_loan, shelf, book_description_id) values (5
 insert into books (id, available_for_loan, shelf, book_description_id) values (6, true, '1E', 5);
 insert into books (id, available_for_loan, shelf, book_description_id) values (7, true, '1E', 6);
 insert into books (id, available_for_loan, shelf, book_description_id) values (8, true, '1E', 6);
-
- insert into users (id, type, password, first_name, last_name, email, ssn, street_address, city,
- zip_code, country) values (1, 'STANDARD', 'password', 'Per', 'Nilsson', 'per.nilsson@hotmail.com', '196001100123', 'Gatan 1',
- 'Uppsala', 17895, 'Sverige');
- insert into users (id, type, password, first_name, last_name, email, ssn, street_address, city,
- zip_code, country) values (2, 'STANDARD', 'password', 'Nils', 'Persson', 'nils.persson@hotmail.com', '197502010156', 'Vägen 1',
- 'Stockholm', 12345, 'Sverige');
 
 insert into loans (id, active, created_date, user_id) values (1, true,'2020-10-01', 1);
 insert into loans (id, active, created_date, user_id) values (2, true,'2020-10-01', 1);

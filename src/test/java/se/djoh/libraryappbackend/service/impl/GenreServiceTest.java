@@ -1,9 +1,11 @@
 package se.djoh.libraryappbackend.service.impl;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import se.djoh.libraryappbackend.domain.Genre;
 import se.djoh.libraryappbackend.repository.GenreRepository;
@@ -12,10 +14,11 @@ import se.djoh.libraryappbackend.service.GenreService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 public class GenreServiceTest {
     @Mock

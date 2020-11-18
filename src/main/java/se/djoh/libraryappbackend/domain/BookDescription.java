@@ -1,6 +1,7 @@
 package se.djoh.libraryappbackend.domain;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,6 +17,10 @@ public class BookDescription {
     private String isbn;
     private String title;
     private String summary;
+    private String language;
+
+    @Column(name="published_year")
+    private Integer publishedYear;
 
     @OneToOne()
     @JoinColumn(name="author_id")
@@ -31,8 +36,17 @@ public class BookDescription {
     @Column(name="image_url")
     private String imageUrl;
 
+    @ToString.Exclude
     @OneToMany(mappedBy="bookDescription", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private List<Book> books;
+
+    @Enumerated(EnumType.STRING)
+    private BookFormatEnum format;
+
+    @ToString.Exclude
+    @ManyToOne()
+    @JoinColumn(name="publisher_id")
+    private Publisher publisher;
 
     public void addBook(Book book) {
         books.add(book);

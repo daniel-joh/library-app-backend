@@ -18,14 +18,20 @@ public class BookDto {
     private String isbn;
     private String title;
     private String summary;
-    private int numberOfPages;
+    private Integer numberOfPages;
     private String imageUrl;
+    private Integer publishedYear;
+    private String language;
+    private String format;
 
     //From Author
     private String authorName;
 
     //From Genre
     private String genreName;
+
+    //From Publisher
+    private String publisherName;
 
     //Creates List of BookDto:s from BookDescription and Book
     public static List<BookDto> createBookDtoList(BookDescription bookDesc) {
@@ -46,6 +52,12 @@ public class BookDto {
             dto.setSummary(bookDesc.getSummary());
             dto.setNumberOfPages(bookDesc.getNumberOfPages());
             dto.setImageUrl(bookDesc.getImageUrl());
+            dto.setPublishedYear(bookDesc.getPublishedYear());
+            dto.setLanguage(bookDesc.getLanguage());
+
+            if (bookDesc.getFormat() != null) {
+                dto.setFormat(bookDesc.getFormat().name());
+            }
 
             if (bookDesc.getAuthor() != null) {
                 dto.setAuthorName(bookDesc.getAuthor().getFirstName() + " " + bookDesc.getAuthor().getLastName());
@@ -53,6 +65,10 @@ public class BookDto {
 
             if (bookDesc.getGenre() != null) {
                 dto.setGenreName(bookDesc.getGenre().getName());
+            }
+
+            if (bookDesc.getPublisher() != null) {
+                dto.setPublisherName(bookDesc.getPublisher().getName());
             }
         }
 
@@ -67,6 +83,12 @@ public class BookDto {
         dto.setSummary(bookDesc.getSummary());
         dto.setNumberOfPages(bookDesc.getNumberOfPages());
         dto.setImageUrl(bookDesc.getImageUrl());
+        dto.setPublishedYear(bookDesc.getPublishedYear());
+        dto.setLanguage(bookDesc.getLanguage());
+
+        if (bookDesc.getFormat() != null) {
+            dto.setFormat(bookDesc.getFormat().name());
+        }
 
         if (bookDesc.getAuthor() != null) {
             dto.setAuthorName(bookDesc.getAuthor().getFirstName() + " " + bookDesc.getAuthor().getLastName());
@@ -75,6 +97,16 @@ public class BookDto {
         if (bookDesc.getGenre() != null) {
             dto.setGenreName(bookDesc.getGenre().getName());
         }
+        if (bookDesc.getPublisher() != null) {
+            dto.setPublisherName(bookDesc.getPublisher().getName());
+        }
+        return dto;
+    }
+
+    public static BookDto addBookInformationToDto(BookDto dto, Book book) {
+        dto.setBookId(book.getId());
+        dto.setAvailableForLoan(book.isAvailableForLoan());
+        dto.setShelf(book.getShelf());
         return dto;
     }
 

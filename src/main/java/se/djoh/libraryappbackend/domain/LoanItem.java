@@ -1,6 +1,9 @@
 package se.djoh.libraryappbackend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -12,6 +15,8 @@ public class LoanItem {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @ToString.Exclude
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name="loan_id")
     private Loan loan;

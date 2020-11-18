@@ -9,7 +9,7 @@ public interface LoanService {
 
     List<Loan> getLoans(Long userId);
 
-    Loan getLoanById(Long loanId);
+    Loan getLoanByUserIdAndLoanId(Long userId, Long loanId);
 
     Loan returnLoanedBook(Long bookId);
 

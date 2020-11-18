@@ -12,6 +12,7 @@ import se.djoh.libraryappbackend.rest.exception.ResourceNotCreatedException;
 import se.djoh.libraryappbackend.rest.exception.ResourceNotFoundException;
 import se.djoh.libraryappbackend.service.LoanService;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class LoanController {
     @Autowired
     private LoanService loanService;
 
-    @PostMapping(path="/loans")
-    public ResponseEntity<LoanDto> createLoan(@RequestBody LoanCartDto loanCartDto) {
+    @PostMapping(path = "/loans")
+    public ResponseEntity<LoanDto> createLoan(@RequestBody @Valid LoanCartDto loanCartDto) {
         Loan loan = loanService.createLoan(loanCartDto.getUserId(), loanCartDto.getBookIds());
 
         if (loan == null) {
@@ -33,7 +34,7 @@ public class LoanController {
 
         LoanDto loanDto = new LoanDto();
         loanDto = loanDto.createLoanDto(loan);
-        log.info("Created loan with id " + loan.getId());
+        log.info("Created loan with id " + loan.getId() + " for user id " + loanCartDto.getUserId());
         return new ResponseEntity<>(loanDto, HttpStatus.CREATED);
     }
 
@@ -51,22 +52,22 @@ public class LoanController {
         return new ResponseEntity<>(loanDto, HttpStatus.OK);
     }
 
-    @GetMapping(path="loans")
+    @GetMapping(path = "loans")
     public List<LoanDto> getLoans(@RequestParam Long userId) {
-         List<Loan> loans = loanService.getLoans(userId);
-         List<LoanDto> loanDtos = new ArrayList<>();
+        List<Loan> loans = loanService.getLoans(userId);
+        List<LoanDto> loanDtos = new ArrayList<>();
 
-         for (Loan loan : loans) {
-             LoanDto loanDto = new LoanDto();
-             loanDto = loanDto.createLoanDto(loan);
-             loanDtos.add(loanDto);
-         }
-         return loanDtos;
+        for (Loan loan : loans) {
+            LoanDto loanDto = new LoanDto();
+            loanDto = loanDto.createLoanDto(loan);
+            loanDtos.add(loanDto);
+        }
+        return loanDtos;
     }
 
-    @GetMapping(path="loans/{loanId}")
-    public LoanDto getLoan(@PathVariable Long loanId) {
-        Loan loan = loanService.getLoanById(loanId);
+    @GetMapping(path = "loans/{loanId}")
+    public LoanDto getLoan(@PathVariable Long loanId, @RequestParam Long userId) {
+        Loan loan = loanService.getLoanByUserIdAndLoanId(userId, loanId);
 
         if (loan == null) {
             throw new ResourceNotFoundException("Loan with id " + loanId + " not found!");

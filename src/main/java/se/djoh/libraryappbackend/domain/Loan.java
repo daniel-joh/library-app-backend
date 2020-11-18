@@ -1,7 +1,7 @@
 package se.djoh.libraryappbackend.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,9 +17,11 @@ public class Loan {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy="loan", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @OneToMany(mappedBy="loan", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<LoanItem> loanItems = new ArrayList<>();
 
+    @ToString.Exclude
     @ManyToOne()
     @JoinColumn(name="user_id")
     private User user;
@@ -28,8 +30,6 @@ public class Loan {
 
     @Column(name="created_date")
     private LocalDate createdDate;
-
-    public void inactivate() { }
 
     public void addLoanItem(LoanItem loanitem) {
         loanItems.add(loanitem);
